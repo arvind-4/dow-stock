@@ -4,10 +4,10 @@ Simple Stocks app in Python and Next.js
 
 ## 📦 Tech Stack:
 
-- [FastAPI](https://fastapi.tiangolo.com/)  - FastAPI framework, high performance, easy to learn, fast to code, ready for production.
--   [Next.js](https://nextjs.org/)  - The React Framework for the Web.
--   [Typescript](https://www.typescriptlang.org/)  - JavaScript with syntax for types.
--   [Tailwind 3](https://tailwindcss.com/)  - Rapidly build modern websites without ever leaving your HTML.
+- [FastAPI](https://fastapi.tiangolo.com/) - FastAPI framework, high performance, easy to learn, fast to code, ready for production.
+- [Next.js](https://nextjs.org/) - The React Framework for the Web.
+- [Typescript](https://www.typescriptlang.org/) - JavaScript with syntax for types.
+- [Tailwind 3](https://tailwindcss.com/) - Rapidly build modern websites without ever leaving your HTML.
 
 ## Demo:
 
@@ -15,17 +15,15 @@ Simple Stocks app in Python and Next.js
 <img src=".github/static/homepage.png" alt="Home Page"/>
 </a>
 
+## Getting Started:
 
-
-## Getting Started: 
-
-- Clone repository 
+- Clone repository
 
 ```bash
 mkdir ~/Dev/dow-stock -p
 cd ~/Dev/dow-stock
 git clone https://github.com/Arvind-4/dow-stock.git .
-```  
+```
 
 - Install Dependencies **(Frontend)**:
 
@@ -39,7 +37,7 @@ npm i
 ```bash
 cd ~/Dev/dow-stock
 python3.8 -m pip install virtualenv
-python3.8 -m virtualenv . 
+python3.8 -m virtualenv .
 source bin/activate
 pip install -r requirements.txt
 ```
