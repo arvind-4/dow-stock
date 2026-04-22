@@ -12,7 +12,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -55,7 +54,6 @@ target/
 .ipynb_checkpoints
 profile_default/
 ipython_config.py
-.python-version
 Pipfile.lock
 poetry.lock
 pdm.lock
@@ -83,7 +81,6 @@ dmypy.json
 cython_debug/
 .idea/
 *.bundle.*
-lib/
 node_modules/
 *.egg-info/
 .ipynb_checkpoints
@@ -99,7 +96,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -130,7 +126,6 @@ coverage.xml
 .scrapy
 docs/_build/
 target/
-.python-version
 celerybeat-schedule
 *.sage.py
 .spyderproject
@@ -198,5 +193,3 @@ yarn-error.log*
 .env*.local
 .vercel
 *.tsbuildinfo
-package-lock.json
-poetry.lock
