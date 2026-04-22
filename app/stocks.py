@@ -1,9 +1,14 @@
+"""Stocks module."""
+
+from datetime import date
+
 import yfinance as yf
 
 
-def get_dow30_data(start_date, end_date):
+def get_dow30_data(start_date: date, end_date: date) -> dict:
+    """Get Dow Jones 30 stock data for a given date range."""
     data = yf.download("^DJI", start=start_date, end=end_date, interval="1d")
-    data = data["Adj Close"].to_dict()
-    if len(data) == 0 or data is None or data == {} or data == dict():
+    data = data["High"].to_dict()
+    if not data:
         return {}
     return data

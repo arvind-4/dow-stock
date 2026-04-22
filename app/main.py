@@ -1,12 +1,18 @@
-from typing import Optional
-from fastapi import FastAPI, Request, Response, status
+"""Main module."""
+
+from datetime import date
+from typing import Annotated
+
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from .stocks import get_dow30_data
+from app.stocks import get_dow30_data
 
 app = FastAPI()
 
 origins = ["*"]
+
+MAX_RANGE_DAYS = 365
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,23 +24,31 @@ app.add_middleware(
 
 
 @app.get("/api")
-async def index(request: Request, response: Response):
+async def index() -> dict:
+    """Return a JSON response with a message."""
     return {"message": "Hello World", "status": True, "data": {}}
 
 
 @app.get("/api/stocks")
-async def getStocks(
-    request: Request,
-    response: Response,
-    start: Optional[str] = None,
-    end: Optional[str] = None,
-):
-    if start is None or end is None:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return {"message": "start and end is required", "status": False, "data": {}}
-    data = get_dow30_data(start, end)
-    if data == {}:
-        return {"message": "Data not found", "status": False, "data": {}}
+def get_stocks(
+    start: Annotated[date, Query()],
+    end: Annotated[date, Query()],
+) -> dict:
+    """Get Dow Jones 30 stock data for a given date range."""
+    if start > end:
+        raise HTTPException(400, "start date must be before end date")
+    if (end - start).days > MAX_RANGE_DAYS:
+        raise HTTPException(400, f"Date range cannot exceed {MAX_RANGE_DAYS} days")
+
+    data = get_dow30_data(start_date=start, end_date=end)
+
+    if not data:
+        return {
+            "message": "Data not found",
+            "status": False,
+            "data": {},
+        }
+
     return {
         "message": "Data retrieved successfully",
         "status": True,
