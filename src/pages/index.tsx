@@ -10,12 +10,20 @@ import {
   Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getDefaultEndDate, getDefaultStartDate } from '@src/utils/dates';
 import { fetchData } from '@src/utils/data';
 import options from '@src/chart/options';
-import Header from '@src/components/Header';
-import Loading from '@src/components/Loading';
+import Loading from '@src/components/loading';
+import { Button } from '@src/components/ui/button';
+import { Input } from '@src/components/ui/input';
+import { Label } from '@src/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@src/components/ui/card';
 
 ChartJS.register(
   CategoryScale,
@@ -28,75 +36,53 @@ ChartJS.register(
   Filler
 );
 
-export default function Home() {
-  const [defaultData, setDefaultData] = useState(null) as any;
+export default function HomePage() {
+  const [startDate, setStartDate] = useState(getDefaultStartDate());
+  const [endDate, setEndDate] = useState(getDefaultEndDate());
+  const [defaultData, setDefaultData] = useState<any>(null);
 
   useEffect(() => {
-    fetchData(getDefaultStartDate(), getDefaultEndDate()).then((data) => {
-      if (data) {
-        setDefaultData(data);
-      }
+    fetchData(startDate, endDate).then((data) => {
+      if (data) setDefaultData(data);
     });
-  }, []);
+  }, [startDate, endDate]);
 
-  const lineChartRef = useRef(null);
-
-  function renderChart() {
-    const chart = lineChartRef.current as any;
-    const start = (document.getElementById('start') as HTMLInputElement).value;
-    const end = (document.getElementById('end') as HTMLInputElement).value;
-
-    fetchData(start, end).then((data) => {
-      if (data) {
-        setDefaultData(data);
-      }
-    });
-    if (chart) {
-      chart.data = defaultData;
-      chart.update();
-    }
-  }
   return (
-    <div>
-      <Header />
+    <main>
       {defaultData ? (
-        <Line
-          data={defaultData as any}
-          width={100}
-          height={50}
-          options={options}
-          ref={lineChartRef}
-        />
+        <Line data={defaultData} options={options} />
       ) : (
         <Loading />
       )}
-      <br />
-      <br />
-
-      <div className='flex'>
-        <div className='m-auto'>
-          <h1 className='text-2xl'>Select Date Range ( Start and End Date)</h1>
-          <br />
-          <input
-            id='start'
-            className='block w-full p-4 text-gray-900 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500'
-            defaultValue={getDefaultStartDate()}
-            type='date'
-            onChange={renderChart}
-          />
-          <br />
-          <br />
-          <input
-            id='end'
-            className='block w-full p-4 text-gray-900 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500'
-            defaultValue={getDefaultEndDate()}
-            type='date'
-            onChange={renderChart}
-          />
-          <br />
-          <br />
-        </div>
+      <div className='flex mt-6 mb-6 justify-center'>
+        <Card className='w-1/2'>
+          <CardHeader>
+            <CardTitle className='text-2xl'>
+              Select Date Range (Start and End Date)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='start'>Start Date</Label>
+              <Input
+                id='start'
+                type='date'
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='end'>End Date</Label>
+              <Input
+                id='end'
+                type='date'
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,17 +1,27 @@
 import { baseUrl } from '@src/config';
 
-let labels: Array<String> = [];
-
 async function fetchData(start: string, end: string) {
   const res = await fetch(`${baseUrl}/api/stocks?start=${start}&end=${end}`);
-  if (!res.ok) return null;
-  const data = await res.json();
-  labels = Object.keys(data.data).map((label) => label.slice(0, 10));
+
+  const json = await res.json();
+  if (res.status !== 200) {
+    return json['detail'];
+  }
+  const symbol = Object.keys(json.data)[0];
+
+  const stockData = json.data[symbol];
+  const labels = Object.keys(stockData).map((date) => date.slice(0, 10));
+  const values = Object.values(stockData).map((val) => Number(val));
   return {
-    labels: labels,
+    labels,
     datasets: [
       {
-        data: Object.values(data.data),
+        label: 'Dow 30',
+        data: values,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+        tension: 0.3,
       },
     ],
   };
