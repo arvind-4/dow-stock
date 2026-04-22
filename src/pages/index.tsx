@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { getDefaultEndDate, getDefaultStartDate } from '@src/utils/dates';
 import { fetchData } from '@src/utils/data';
 import options from '@src/chart/options';
-import Loading from '@src/components/loading';
+import Loading from '@src/components/Loading';
 import { Input } from '@src/components/ui/input';
 import { Label } from '@src/components/ui/label';
 import {
