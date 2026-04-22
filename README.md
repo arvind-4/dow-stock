@@ -14,6 +14,10 @@ Simple Stocks app in Python and Next.js
 <a href="https://dowstock.vercel.app">
 <img src=".github/static/homepage.png" alt="Home Page"/>
 </a>
+## Prerequisites:
+
+- [uv](https://www.astral.sh/uv/) - A better way to manage Python environments.
+- [bun](https://bun.sh/) - A fast all-in-one package manager for modern JavaScript.
 
 ## Getting Started:
 
@@ -29,29 +33,26 @@ git clone https://github.com/Arvind-4/dow-stock.git .
 
 ```bash
 cd ~/Dev/dow-stock
-npm i
+bun install
 ```
 
 - Install Dependencies **(Backend)**:
 
 ```bash
 cd ~/Dev/dow-stock
-python3.8 -m pip install virtualenv
-python3.8 -m virtualenv .
-source bin/activate
-pip install -r requirements.txt
+uv sync --all-groups
 ```
 
 - Run Server **(Frontend)**:
 
 ```bash
-npm run dev
+bun dev
 ```
 
 - Run Server **(Backend)**:
 
 ```bash
-bash scripts/run.sh
+uv run uvicorn app.main:app --reload
 ```
 
 Open [localhost:3000](http://localhost:3000) for the Front end and [localhost:8000](http://localhost:8000) for Back end.
